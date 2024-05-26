@@ -1,16 +1,16 @@
 package units;
 
-
 import java.awt.*;
 
-public class Enemy{
+
+public class Bullet {
 
     private int x, y;
-    private final int WIDTH = 30;
-    private final int HEIGHT = 20;
+    private final int WIDTH = 5;
+    private final int HEIGHT = 10;
     private boolean visible;
 
-    public Enemy(int x, int y) {
+    public Bullet(int x, int y) {
         this.x = x;
         this.y = y;
         this.visible = true;
@@ -18,14 +18,14 @@ public class Enemy{
 
     public void draw(Graphics g) {
         if (visible) {
-            g.setColor(Color.RED);
+            g.setColor(Color.YELLOW);
             g.fillRect(x, y, WIDTH, HEIGHT);
         }
     }
 
     public void move() {
-        y += 1; // Aliens move downwards
-        if (y > 600) {
+        y -= 2;
+        if (y < 0) {
             visible = false;
         }
     }
@@ -38,11 +38,9 @@ public class Enemy{
         this.visible = visible;
     }
 
-    public int getY() {
-        return y;
-    }
-
     public Rectangle getBounds() {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
 }
+
+

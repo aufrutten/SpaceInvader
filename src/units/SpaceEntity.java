@@ -1,9 +1,12 @@
 package units;
 
 
+import java.awt.event.KeyEvent;
+
 public abstract class SpaceEntity {
     protected int x;
     protected int y;
+    private int dx;
     protected double speed;
     protected final String image;
 
@@ -41,4 +44,7 @@ public abstract class SpaceEntity {
     public void setSpeed(double speed) {
         this.speed = speed;
     }
+
+
+
 }
