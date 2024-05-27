@@ -7,31 +7,25 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 public class ScrollingImagesPanel extends JPanel implements ActionListener {
-    static final int PANEL_WIDTH = 500;
-    static final int PANEL_HEIGHT = 900;
+    public static final int PANEL_WIDTH = 500;
+    public static final int PANEL_HEIGHT = 900;
     private static final int TIMER_DELAY = 5;
 
-    private BufferedImage image1;
-    private BufferedImage image2;
-    private BufferedImage image3;
-
-    private Image scaledImage1;
-    private Image scaledImage2;
-    private Image scaledImage3;
-
-    private int imageHeight;
+    private final Image scaledImage1;
+    private final Image scaledImage2;
+    private final Image scaledImage3;
+    private final int imageHeight;
     private int yPosition1;
     private int yPosition2;
     private int yPosition3;
-
     private Timer timer;
 
-    public ScrollingImagesPanel(BufferedImage image1, BufferedImage image2, BufferedImage image3) {
-        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-        this.image1 = image1;
-        this.image2 = image2;
-        this.image3 = image3;
+    public ScrollingImagesPanel() {
+        BufferedImage image1 = ImageLoader.loadImage("./Sprite/backgroud/backgroundFrame1.png");
+        BufferedImage image2 = ImageLoader.loadImage("./Sprite/backgroud/backgroundFrame2.png");
+        BufferedImage image3 = ImageLoader.loadImage("./Sprite/backgroud/backgroundFrame3.png");
 
+        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         // Ridimensiona le immagini mantenendo le proporzioni
         scaledImage1 = getScaledImage(image1, PANEL_WIDTH);
         scaledImage2 = getScaledImage(image2, PANEL_WIDTH);
@@ -48,6 +42,7 @@ public class ScrollingImagesPanel extends JPanel implements ActionListener {
         // Imposta il timer per l'animazione
         timer = new Timer(TIMER_DELAY, this);
         timer.start();
+        setBounds(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
     }
 
     private Image getScaledImage(BufferedImage src, int width) {
@@ -60,7 +55,6 @@ public class ScrollingImagesPanel extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         // Disegna le immagini alle rispettive posizioni
         g.drawImage(scaledImage1, 0, yPosition1, this);
         g.drawImage(scaledImage2, 0, yPosition2, this);
@@ -84,7 +78,6 @@ public class ScrollingImagesPanel extends JPanel implements ActionListener {
         if (yPosition3 >= PANEL_HEIGHT) {
             yPosition3 = yPosition2 - imageHeight;
         }
-
         // Richiedi il ridisegno del pannello
         repaint();
     }
