@@ -11,7 +11,7 @@ public class MainFrame {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Scrolling Images");
-        frame.setResizable(false);
+        frame.setResizable(false );
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(PANEL_WIDTH, PANEL_HEIGHT);
 
