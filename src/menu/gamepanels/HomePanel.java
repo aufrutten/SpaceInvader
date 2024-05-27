@@ -2,8 +2,10 @@ package menu.gamepanels;
 
 import menu.ImageLoader;
 import menu.MainFrame;
+import menu.ScrollingImagesPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -32,14 +34,14 @@ public class HomePanel extends JPanel {
         add(bestScoreLabel);
 
         JButton startButton = new JButton(new ImageIcon(startButtonImage));
-        startButton.setBounds((PANEL_WIDTH - startButtonImage.getWidth()) / 2, 650, startButtonImage.getWidth(), startButtonImage.getHeight());
+        startButton.setBounds((PANEL_WIDTH - startButtonImage.getWidth()) / 2, 450, startButtonImage.getWidth(), startButtonImage.getHeight());
         startButton.setBorderPainted(false);
         startButton.setContentAreaFilled(false);
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == startButton) {
-                    removeAll();
+                    MainFrame.layeredPane.remove(startButton.getParent());
                     MainFrame.layeredPane.add(new PlayingPanel(), Integer.valueOf(2));
                     MainFrame.layeredPane.repaint();
                 }
@@ -48,14 +50,14 @@ public class HomePanel extends JPanel {
         add(startButton);
 
         JButton leaderboardButton = new JButton(new ImageIcon(leaderboardButtonImage));
-        leaderboardButton.setBounds((PANEL_WIDTH - leaderboardButtonImage.getWidth()) / 2, 750, leaderboardButtonImage.getWidth(), leaderboardButtonImage.getHeight());
+        leaderboardButton.setBounds((PANEL_WIDTH - leaderboardButtonImage.getWidth()) / 2, 550, leaderboardButtonImage.getWidth(), leaderboardButtonImage.getHeight());
         leaderboardButton.setBorderPainted(false);
         leaderboardButton.setContentAreaFilled(false);
         leaderboardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                removeAll();
-                MainFrame.layeredPane.add(new LeaderBoardPanel(), Integer.valueOf(2));
+                MainFrame.layeredPane.remove(startButton.getParent());
+                MainFrame.layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(2));
                 MainFrame.layeredPane.repaint();
             }
         });

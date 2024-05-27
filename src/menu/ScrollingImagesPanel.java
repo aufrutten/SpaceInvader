@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class ScrollingImagesPanel extends JPanel implements ActionListener {
     public static final int PANEL_WIDTH = 500;
-    public static final int PANEL_HEIGHT = 900;
+    public static final int PANEL_HEIGHT = 750;
     private static final int TIMER_DELAY = 5;
 
     private final Image scaledImage1;
