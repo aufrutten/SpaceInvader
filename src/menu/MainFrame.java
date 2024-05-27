@@ -4,14 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
+import static menu.ScrollingImagesPanel.PANEL_WIDTH;
+
 public class MainFrame {
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Scrolling Images");
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 1000);
+        frame.setSize(PANEL_WIDTH, PANEL_HEIGHT);
 
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(600, 1000));
+        layeredPane.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 
         String projectDir = System.getProperty("user.dir");
 
@@ -26,12 +31,12 @@ public class MainFrame {
 
         // Crea il pannello di scrolling
         ScrollingImagesPanel scrollingPanel = new ScrollingImagesPanel(image1, image2, image3);
-        scrollingPanel.setBounds(0, 0, 600, 1000);
+        scrollingPanel.setBounds(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
         layeredPane.add(scrollingPanel, Integer.valueOf(1));
 
         // Crea il pannello di overlay
         OverlayPanel overlayPanel = new OverlayPanel(titleImage, bestScoreImage, startButtonImage, leaderboardButtonImage);
-        overlayPanel.setBounds(0, 0, 600, 1000);
+        overlayPanel.setBounds(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
         layeredPane.add(overlayPanel, Integer.valueOf(2));
 
         frame.add(layeredPane);

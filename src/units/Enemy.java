@@ -3,7 +3,7 @@ package units;
 
 import java.awt.*;
 
-public class Enemy{
+public class Enemy {
 
     private int x, y;
     private final int WIDTH = 30;

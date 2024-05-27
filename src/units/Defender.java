@@ -15,6 +15,7 @@ public class Defender {
         this.x = x;
         this.y = y;
     }
+
     public void draw(Graphics g) {
         g.setColor(Color.GREEN);
         g.fillRect(x, y, WIDTH, HEIGHT);
@@ -36,15 +37,16 @@ public class Defender {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
-    public void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if(key == KeyEvent.VK_A){
+        if (key == KeyEvent.VK_A) {
             dx = -5;
         }
-        if(key == KeyEvent.VK_D){
+        if (key == KeyEvent.VK_D) {
             dx = 5;
         }
     }
+
     public void move() {
         x += dx;
         if (x < 0) {
@@ -54,6 +56,7 @@ public class Defender {
             x = 600;
         }
     }
+
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT) {
