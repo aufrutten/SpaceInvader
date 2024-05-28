@@ -12,7 +12,7 @@ public class Player {
     private int x;
 
     public Player() {
-        image = new ImageIcon("./Sprite/player-skins/player70x70.png").getImage();
+        image = new ImageIcon("./Sprite/player-skins/playerScaled.png").getImage();
         x = (PANEL_WIDTH - image.getWidth(null)) / 2;
     }
 
