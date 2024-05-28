@@ -5,7 +5,6 @@ import menu.MainFrame;
 import menu.ScrollingImagesPanel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -23,7 +22,7 @@ public class HomePanel extends JPanel {
         setLayout(null);
         setOpaque(false); // Rendi il pannello trasparente
         setBounds(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
-
+        setFocusable(true);
 
         JLabel titleLabel = new JLabel(new ImageIcon(titleImage));
         titleLabel.setBounds((PANEL_WIDTH - titleImage.getWidth()) / 2, 150, titleImage.getWidth(), titleImage.getHeight());
@@ -56,7 +55,7 @@ public class HomePanel extends JPanel {
         leaderboardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainFrame.layeredPane.remove(startButton.getParent());
+                MainFrame.layeredPane.remove(leaderboardButton.getParent());
                 MainFrame.layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(2));
                 MainFrame.layeredPane.repaint();
             }

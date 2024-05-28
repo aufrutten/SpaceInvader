@@ -3,9 +3,7 @@ package menu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import menu.gamepanels.HomePanel;
-import menu.gamepanels.PlayingPanel;
 
 import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
@@ -26,6 +24,7 @@ public class MainFrame {
 
         layeredPane = new JLayeredPane();
         layeredPane.setBounds(new Rectangle(PANEL_WIDTH, PANEL_HEIGHT));
+        layeredPane.setFocusable(true);
 
         // Crea il pannello di scrolling
         layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(1));
@@ -33,7 +32,6 @@ public class MainFrame {
         layeredPane.add(new HomePanel(), Integer.valueOf(2));
 
         frame.add(layeredPane);
-
         frame.setVisible(true);
     }
 }
