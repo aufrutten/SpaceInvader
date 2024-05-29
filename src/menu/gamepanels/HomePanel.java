@@ -40,8 +40,12 @@ public class HomePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == startButton) {
-                    MainFrame.layeredPane.remove(startButton.getParent());
+                    ScrollingImagesPanel.timer.stop();
+                    ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
+                    MainFrame.layeredPane.removeAll();
+                    MainFrame.layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(1));
                     MainFrame.layeredPane.add(new PlayingPanel(), Integer.valueOf(2));
+                    MainFrame.layeredPane.revalidate();
                     MainFrame.layeredPane.repaint();
                 }
             }
@@ -55,9 +59,14 @@ public class HomePanel extends JPanel {
         leaderboardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainFrame.layeredPane.remove(leaderboardButton.getParent());
-                MainFrame.layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(2));
-                MainFrame.layeredPane.repaint();
+                if(e.getSource() == leaderboardButton) {
+                    ScrollingImagesPanel.timer.stop();
+                    ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
+                    MainFrame.layeredPane.remove(leaderboardButton.getParent());
+                    MainFrame.layeredPane.add(new LeaderBoardPanel(), Integer.valueOf(2));
+                    MainFrame.layeredPane.revalidate();
+                    MainFrame.layeredPane.repaint();
+                }
             }
         });
         add(leaderboardButton);

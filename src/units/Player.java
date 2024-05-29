@@ -10,6 +10,7 @@ import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 public class Player {
     private Image image;
     private int x;
+    private final int y = 650;
 
     public Player() {
         image = new ImageIcon("./Sprite/player-skins/playerScaled.png").getImage();
@@ -33,7 +34,6 @@ public class Player {
     }
 
     public void draw(Graphics g) {
-        int y = 650;
         g.drawImage(image, x, y, null);
     }
 
@@ -67,5 +67,17 @@ public class Player {
             }
         };
         timer.scheduleAtFixedRate(task, 0, 10);
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, image.getWidth(null), image.getHeight(null));
+    }
+
+    public boolean checkCollision() {
+        for (Alien alien : Alien.getAliens()) {
+            if(getBounds().intersects(alien.getBounds()))
+                return true;
+        }
+        return false;
     }
 }

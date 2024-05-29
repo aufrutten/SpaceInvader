@@ -9,8 +9,8 @@ import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class Alien extends Thread {
-    private static ArrayList<Alien> aliens = new ArrayList<>();
-    private Image image;
+    private static ArrayList<Alien> aliens;
+    private final Image image;
     private int y;
     private int x;
     private boolean running = true;
@@ -37,14 +37,23 @@ public class Alien extends Thread {
                 e.printStackTrace();
             }
         }
+        try {
+            join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void draw(Graphics g) {
        g.drawImage(image, x, y, null);
     }
 
-    public void move() {
-        if(y<=PANEL_HEIGHT)
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, image.getWidth(null), image.getHeight(null));
+    }
+
+    private void move() {
+        if(y<PANEL_HEIGHT)
             y += 2;
         else
             running = false;
@@ -56,29 +65,35 @@ public class Alien extends Thread {
     }
 
     //Static method for Enemy management
+    public static ArrayList<Alien> getAliens() {
+        return aliens;
+    }
+
     public static void spawnAliens(int number) {
+        aliens = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             aliens.add(new Alien());
         }
     }
 
-    public static ArrayList<Alien> getAliens() {
-        return aliens;
-    }
-
-    public static void removeAlien(Alien alien) {
-        aliens.remove(alien);
-    }
-
-    public static void moveAliens() {
-        for (Alien alien : aliens) {
-            alien.move();
+    public static void removeAliens() {
+        for(Alien alien : aliens) {
+            alien.running = false;
         }
+        aliens.clear();
     }
 
     public static void drawAliens(Graphics g) {
         for (Alien alien : aliens) {
             alien.draw(g);
         }
+    }
+
+    public static boolean borderCollision() {
+        for(Alien alien : Alien.getAliens()) {
+            if(alien.y >= PANEL_HEIGHT - alien.image.getHeight(null))
+                return true;
+        }
+        return false;
     }
 }
