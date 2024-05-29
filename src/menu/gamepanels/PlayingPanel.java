@@ -1,8 +1,6 @@
 package menu.gamepanels;
 
 import units.Alien;
-import units.AlienList;
-import units.Enemy;
 import units.Player;
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +29,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "leftAction");
         getActionMap().put("leftAction", leftAction);
         aliens = new ArrayList<>();
-        AlienList.spawnAliens(5);
+        Alien.spawnAliens(5);
         player = new Player();
         Timer timer = new Timer(20, this);
         timer.start();
@@ -41,7 +39,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         player.draw(g);
-        AlienList.draw(g);
+        Alien.drawAliens(g);
     }
 
     @Override
