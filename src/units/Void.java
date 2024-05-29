@@ -1,8 +1,14 @@
 package units;
 
-public class Void extends SpaceEntity {
+import board.Board;
+import board.PositionException;
 
-    public Void() {}
+
+public class Void extends SpaceUnit {
+
+    public Void(int x, int y, Board board) throws PositionException {
+        super(x, y, board);
+    }
 
     @Override
     public String toString() {

@@ -1,16 +1,27 @@
 import board.Board;
-import units.SpaceEntity;
-
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import board.PositionException;
+import units.Defender;
+import units.Enemy;
 
 public class Main {
 
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
-        Path currentDir = Paths.get("").toAbsolutePath();
+    public static void main(String[] args) throws PositionException {
+        Board board = new Board(70, 20);
 
-        System.out.println(currentDir.resolve("."));
+        int x = 5;
+        int y = 4;
+
+        Defender defender = new Defender(x, y,2, board);
+        Enemy enemy = new Enemy(10, 8, 2, board);
+
+        System.out.println(board);
+        defender.moveLeft(1);
+        defender.moveLeft(1);
+        defender.moveLeft(1);
+        System.out.println(board);
+
+
+        // X and Y it will be center of object
+
     }
 }
