@@ -5,7 +5,6 @@ import board.PositionException;
 
 import java.util.ArrayList;
 
-
 public class Enemy extends SpaceUnit implements Runnable {
 
     public final static ArrayList<Enemy> enemies = new ArrayList<>();
