@@ -18,7 +18,7 @@ public class ScrollingImagesPanel extends JPanel implements ActionListener {
     private int yPosition1;
     private int yPosition2;
     private int yPosition3;
-    private Timer timer;
+    public static Timer timer;
 
     public ScrollingImagesPanel() {
         BufferedImage image1 = ImageLoader.loadImage("./Sprite/backgroud/backgroundFrame1.png");
