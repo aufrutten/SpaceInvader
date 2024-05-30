@@ -6,6 +6,7 @@ import java.awt.*;
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class Player {
+    public static int score;
     private Image image;
     private final Image imageRight;
     private final Image imageLeft;
@@ -22,6 +23,7 @@ public class Player {
         imageLeft = new ImageIcon("./Sprite/player-skins/playerLeft.png").getImage();
         image = imageDefault;
         x = (PANEL_WIDTH - image.getWidth(null)) / 2;
+        score = 0;
     }
 
     public int getX() {
@@ -42,6 +44,9 @@ public class Player {
 
     public void draw(Graphics g) {
         g.drawImage(image, x, y, null);
+        g.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
+        g.setColor(Color.ORANGE);
+        g.drawString("Score: " + score, 5, 25);
     }
 
     public void startMovingRight() {

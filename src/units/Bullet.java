@@ -64,6 +64,7 @@ public class Bullet extends Thread {
             for (Alien alien: Alien.getAliens()) {
                 if (getBounds().intersects(alien.getBounds())) {
                     Alien.removeAlien(alien);
+                    Player.score++;
                     return true;
                 }
             }
