@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
@@ -16,6 +17,7 @@ import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 public class PlayingPanel extends JPanel implements ActionListener {
     public static Player player;
     private final Timer timer;
+    private final Timer aliensTimer;
 
     public PlayingPanel() {
         setFocusable(true);
@@ -57,7 +59,15 @@ public class PlayingPanel extends JPanel implements ActionListener {
                 player.fire();
             }
         });
-        Alien.spawnAliens(5);
+
+        aliensTimer = new Timer(2500, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Random random = new Random();
+                int number = random.nextInt(4) + 1;
+                Alien.spawnAliens(number);
+            }
+        });
+        aliensTimer.start();
         player = new Player();
         timer = new Timer(20, this);
         timer.start();
@@ -79,6 +89,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
             ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
             Alien.removeAliens();
             Bullet.removeAllBullets();
+            aliensTimer.stop();
             timer.stop();
             this.removeAll();
             MainFrame.layeredPane.removeAll();

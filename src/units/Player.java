@@ -14,6 +14,7 @@ public class Player {
     private final int y = 650;
     private boolean movingRight = false;
     private boolean movingLeft = false;
+    private long lastFiretTime = 0;
 
     public Player() {
         imageDefault = new ImageIcon("./Sprite/player-skins/playerScaled.png").getImage();
@@ -73,7 +74,11 @@ public class Player {
     }
 
     public void fire() {
-        Bullet.bullets.add(new Bullet());
+        long actualFireTime = System.currentTimeMillis();
+        if (actualFireTime - lastFiretTime > 700) {
+            lastFiretTime = actualFireTime;
+            Bullet.bullets.add(new Bullet());
+        }
     }
 
     public Rectangle getBounds() {

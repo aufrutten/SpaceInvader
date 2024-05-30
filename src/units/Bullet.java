@@ -51,7 +51,7 @@ public class Bullet extends Thread {
 
     public void move() {
         if(y >= 0) {
-            y -= 4;
+            y -= 6;
             if(checkCollision() || y < 0) {
                 running = false;
                 bullets.remove(this);
@@ -71,12 +71,6 @@ public class Bullet extends Thread {
         return false;
     }
 
-    public static void spawnBullets(int number) {
-        for (int i = 0; i < number; i++) {
-            bullets.add(new Bullet());
-        }
-    }
-
     public static void removeAllBullets() {
         for (Bullet bullet: bullets) {
             if (bullet != null)
@@ -90,32 +84,5 @@ public class Bullet extends Thread {
                 bullet.draw(g);
         }
     }
-
-    /*public final static ArrayList<Bullet> bullets = new ArrayList<>();
-
-    public Bullet(int x, int y, Board board) throws PositionException {
-        super(x, y, 1, board);
-        bullets.add(this);
-    }
-
-    @Override
-    public String toString() {
-        return "B";
-    }
-
-    @Override
-    public void moveUp(int speed) throws PositionException {
-        super.moveUp(speed);
-    }
-
-    @Override
-    public void moveDown(int speed) throws PositionException {
-        super.moveDown(speed);
-    }
-
-    @Override
-    public void run() {
-
-    } */
 }
 

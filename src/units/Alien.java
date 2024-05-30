@@ -9,7 +9,7 @@ import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class Alien extends Thread {
-    private static ArrayList<Alien> aliens;
+    public static ArrayList<Alien> aliens = new ArrayList<>();
     private final Image image;
     private int y;
     private int x;
@@ -80,7 +80,6 @@ public class Alien extends Thread {
     }
 
     public static void spawnAliens(int number) {
-        aliens = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             aliens.add(new Alien());
         }
