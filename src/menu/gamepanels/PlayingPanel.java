@@ -24,13 +24,6 @@ public class PlayingPanel extends JPanel implements ActionListener {
         setLayout(null);
         setBounds(new Rectangle(PANEL_WIDTH, PANEL_HEIGHT));
         setOpaque(false);
-        /*rightAction = new RightAction();
-        leftAction = new LeftAction();
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "rightAction");
-        getActionMap().put("rightAction", rightAction);
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "leftAction");
-        getActionMap().put("leftAction", leftAction); */
-
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed D"), "rightActionPressed");
         getActionMap().put("rightActionPressed", new AbstractAction() {
             @Override
@@ -66,10 +59,8 @@ public class PlayingPanel extends JPanel implements ActionListener {
                 player.fire();
             }
         });
-
         Alien.spawnAliens(5);
         player = new Player();
-        Bullet.spawnBullets(5);
         timer = new Timer(20, this);
         timer.start();
     }

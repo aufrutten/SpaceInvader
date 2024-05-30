@@ -73,7 +73,7 @@ public class Player {
     }
 
     public void fire() {
-        //bullets.add(new Bullet(x + image.getWidth(null) / 2, y));
+        Bullet.bullets.add(new Bullet());
     }
 
     public Rectangle getBounds() {

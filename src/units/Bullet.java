@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Bullet extends Thread {
-    private static ArrayList<Bullet> bullets;
+    public static ArrayList<Bullet> bullets = new ArrayList<>();
     private int y;
     private final int x;
     private final Image image;
@@ -73,7 +73,6 @@ public class Bullet extends Thread {
     }
 
     public static void spawnBullets(int number) {
-        bullets = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             bullets.add(new Bullet());
         }
