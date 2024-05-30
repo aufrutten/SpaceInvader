@@ -1,6 +1,8 @@
 package units;
 
 import menu.gamepanels.PlayingPanel;
+
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -8,16 +10,20 @@ public class Bullet extends Thread {
     private static ArrayList<Bullet> bullets;
     private int y;
     private final int x;
-    private Rectangle rect;
+    private final Image image;
     private boolean running = true;
 
 
     public Bullet() {
         x = PlayingPanel.player.getX() + 35;
         y = 600;
-        rect = new Rectangle(x, y, 4, 8);
+        image = new ImageIcon("./Sprite/player-skins/bullet.png").getImage();
         Thread thread = new Thread(this);
         thread.start();
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, image.getWidth(null), image.getHeight(null));
     }
 
     @Override
@@ -38,15 +44,16 @@ public class Bullet extends Thread {
     }
 
     public void draw(Graphics g) {
-        g.setColor(Color.ORANGE);
-        g.fillRect(x, y, 4, 8);
+        if(running) {
+            g.drawImage(image, x, y, null);
+        }
     }
 
     public void move() {
         if(y >= 0) {
             y -= 4;
-            rect.setLocation(x, y);
             if(checkCollision() || y < 0) {
+                System.out.println("bullet removed");
                 running = false;
                 bullets.remove(this);
             }
@@ -56,7 +63,7 @@ public class Bullet extends Thread {
     public boolean checkCollision() {
         if(Alien.getAliens() != null) {
             for (Alien alien: Alien.getAliens()) {
-                if (rect.intersects(alien.getBounds())) {
+                if (getBounds().intersects(alien.getBounds())) {
                     Alien.removeAlien(alien);
                     return true;
                 }

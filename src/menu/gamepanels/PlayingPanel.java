@@ -15,8 +15,8 @@ import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class PlayingPanel extends JPanel implements ActionListener {
     public static Player player;
-    private final Action rightAction;
-    private final Action leftAction;
+    //private final Action rightAction;
+    //private final Action leftAction;
     private final Timer timer;
 
     public PlayingPanel() {
@@ -24,12 +24,49 @@ public class PlayingPanel extends JPanel implements ActionListener {
         setLayout(null);
         setBounds(new Rectangle(PANEL_WIDTH, PANEL_HEIGHT));
         setOpaque(false);
-        rightAction = new RightAction();
+        /*rightAction = new RightAction();
         leftAction = new LeftAction();
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "rightAction");
         getActionMap().put("rightAction", rightAction);
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "leftAction");
-        getActionMap().put("leftAction", leftAction);
+        getActionMap().put("leftAction", leftAction); */
+
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed D"), "rightActionPressed");
+        getActionMap().put("rightActionPressed", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                player.startMovingRight();
+            }
+        });
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released D"), "rightActionReleased");
+        getActionMap().put("rightActionReleased", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                player.stopMovingRight();
+            }
+        });
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed A"), "leftActionPressed");
+        getActionMap().put("leftActionPressed", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                player.startMovingLeft();
+            }
+        });
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released A"), "leftActionReleased");
+        getActionMap().put("leftActionReleased", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                player.stopMovingLeft();
+            }
+        });
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("SPACE"), "fireAction");
+        getActionMap().put("fireAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                player.fire();
+            }
+        });
+
         Alien.spawnAliens(5);
         player = new Player();
         Bullet.spawnBullets(5);
@@ -47,6 +84,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        player.update();
         if(player.checkCollision() || Alien.borderCollision()) {
             ScrollingImagesPanel.timer.stop();
             ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
@@ -62,21 +100,5 @@ public class PlayingPanel extends JPanel implements ActionListener {
             return;
         }
         repaint();
-    }
-
-    public class RightAction extends AbstractAction {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            player.moveRight();
-            repaint();
-        }
-    }
-
-    public class LeftAction extends AbstractAction {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            player.moveLeft();
-            repaint();
-        }
     }
 }
