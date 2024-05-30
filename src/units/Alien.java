@@ -64,6 +64,16 @@ public class Alien extends Thread {
             x += random.nextInt(20) + 5;
     }
 
+    public static boolean borderCollision() {
+        if(aliens != null) {
+            for(Alien alien : Alien.getAliens()) {
+                if(alien.y >= PANEL_HEIGHT - alien.image.getHeight(null))
+                    return true;
+            }
+        }
+        return false;
+    }
+
     //Static method for Enemy management
     public static ArrayList<Alien> getAliens() {
         return aliens;
@@ -76,24 +86,23 @@ public class Alien extends Thread {
         }
     }
 
+    public static void removeAlien(Alien alien) {
+        alien.running = false;
+        aliens.remove(alien);
+    }
+
     public static void removeAliens() {
         for(Alien alien : aliens) {
-            alien.running = false;
+            if(alien != null)
+                alien.running = false;
         }
         aliens.clear();
     }
 
     public static void drawAliens(Graphics g) {
         for (Alien alien : aliens) {
-            alien.draw(g);
+            if(alien != null)
+                alien.draw(g);
         }
-    }
-
-    public static boolean borderCollision() {
-        for(Alien alien : Alien.getAliens()) {
-            if(alien.y >= PANEL_HEIGHT - alien.image.getHeight(null))
-                return true;
-        }
-        return false;
     }
 }

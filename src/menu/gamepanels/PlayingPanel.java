@@ -3,6 +3,7 @@ package menu.gamepanels;
 import menu.MainFrame;
 import menu.ScrollingImagesPanel;
 import units.Alien;
+import units.Bullet;
 import units.Player;
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class PlayingPanel extends JPanel implements ActionListener {
-    private final Player player;
+    public static Player player;
     private final Action rightAction;
     private final Action leftAction;
     private final Timer timer;
@@ -31,6 +32,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
         getActionMap().put("leftAction", leftAction);
         Alien.spawnAliens(5);
         player = new Player();
+        Bullet.spawnBullets(5);
         timer = new Timer(20, this);
         timer.start();
     }
@@ -40,6 +42,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         player.draw(g);
         Alien.drawAliens(g);
+        Bullet.drawBullets(g);
     }
 
     @Override
@@ -48,6 +51,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
             ScrollingImagesPanel.timer.stop();
             ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
             Alien.removeAliens();
+            Bullet.removeAllBullets();
             timer.stop();
             this.removeAll();
             MainFrame.layeredPane.removeAll();

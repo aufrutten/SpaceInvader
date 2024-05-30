@@ -74,9 +74,11 @@ public class Player {
     }
 
     public boolean checkCollision() {
-        for (Alien alien : Alien.getAliens()) {
-            if(getBounds().intersects(alien.getBounds()))
-                return true;
+        if(Alien.getAliens() != null) {
+            for (Alien alien : Alien.getAliens()) {
+                if(getBounds().intersects(alien.getBounds()))
+                    return true;
+            }
         }
         return false;
     }
