@@ -1,38 +1,34 @@
+// /mnt/data/Bullet.java
 package units;
 
-import board.Board;
-import board.PositionException;
+import javax.swing.*;
+import java.awt.*;
 
-import java.util.ArrayList;
+public class Bullet {
+    private int x;
+    private int y;
+    private final int speed = 5;
+    private final Image image;
 
-
-public class Bullet extends SpaceUnit implements Runnable {
-
-    public final static ArrayList<Bullet> bullets = new ArrayList<>();
-
-    public Bullet(int x, int y, Board board) throws PositionException {
-        super(x, y, 1, board);
-        bullets.add(this);
+    public Bullet(int x, int y) {
+        this.x = x;
+        this.y = y;
+        image = new ImageIcon("./Sprite/player-skins/bullet.png").getImage();
     }
 
-    @Override
-    public String toString() {
-        return "B";
+    public void move() {
+        y -= speed;
     }
 
-    @Override
-    public void moveUp(int speed) throws PositionException {
-        super.moveUp(speed);
+    public void draw(Graphics g) {
+        g.drawImage(image, x, y, null);
     }
 
-    @Override
-    public void moveDown(int speed) throws PositionException {
-        super.moveDown(speed);
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, image.getWidth(null), image.getHeight(null));
     }
 
-    @Override
-    public void run() {
-
+    public boolean isOffScreen() {
+        return y < 0;
     }
 }
-

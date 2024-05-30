@@ -1,19 +1,30 @@
+// /mnt/data/Player.java
 package units;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.ArrayList;
+import java.util.List;
 
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class Player {
     private Image image;
+    private Image imageRight;
+    private Image imageLeft;
+    private Image imageDefault;
     private int x;
     private final int y = 650;
+    private boolean movingRight = false;
+    private boolean movingLeft = false;
+    private final int speed = 12; // Velocità ridotta per maggiore precisione con frequenza più alta
+    private final List<Bullet> bullets = new ArrayList<>();
 
     public Player() {
-        image = new ImageIcon("./Sprite/player-skins/playerScaled.png").getImage();
+        imageDefault = new ImageIcon("./Sprite/player-skins/playerScaled.png").getImage();
+        imageRight = new ImageIcon("./Sprite/player-skins/playerRight.png").getImage();
+        imageLeft = new ImageIcon("./Sprite/player-skins/playerLeft.png").getImage();
+        image = imageDefault;
         x = (PANEL_WIDTH - image.getWidth(null)) / 2;
     }
 
@@ -35,38 +46,50 @@ public class Player {
 
     public void draw(Graphics g) {
         g.drawImage(image, x, y, null);
+        for (Bullet bullet : bullets) {
+            bullet.draw(g);
+        }
     }
 
-    public void moveRight() {
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            int counter = 3;
-            @Override
-            public void run() {
-                if(x + image.getWidth(null) < PANEL_WIDTH - 10)
-                    x += 2;
-                counter--;
-                if(counter == 0)
-                    timer.cancel();
-            }
-        };
-        timer.scheduleAtFixedRate(task, 0, 10);
+    public void startMovingRight() {
+        movingRight = true;
+        image = imageRight;
     }
 
-    public void moveLeft() {
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            int counter = 3;
-            @Override
-            public void run() {
-                if(x >= 0)
-                    x -= 2;
-                counter--;
-                if(counter == 0)
-                    timer.cancel();
+    public void stopMovingRight() {
+        movingRight = false;
+        image = imageDefault;
+    }
+
+    public void startMovingLeft() {
+        movingLeft = true;
+        image = imageLeft;
+    }
+
+    public void stopMovingLeft() {
+        movingLeft = false;
+        image = imageDefault;
+    }
+
+    public void update() {
+        if (movingRight && x + image.getWidth(null) < PANEL_WIDTH - 10) {
+            x += speed;
+        }
+        if (movingLeft && x >= 0) {
+            x -= speed;
+        }
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet bullet = bullets.get(i);
+            bullet.move();
+            if (bullet.isOffScreen()) {
+                bullets.remove(i);
+                i--;
             }
-        };
-        timer.scheduleAtFixedRate(task, 0, 10);
+        }
+    }
+
+    public void fire() {
+        bullets.add(new Bullet(x + image.getWidth(null) / 2, y));
     }
 
     public Rectangle getBounds() {
@@ -75,9 +98,14 @@ public class Player {
 
     public boolean checkCollision() {
         for (Alien alien : Alien.getAliens()) {
-            if(getBounds().intersects(alien.getBounds()))
+            if (getBounds().intersects(alien.getBounds())) {
                 return true;
+            }
         }
         return false;
+    }
+
+    public List<Bullet> getBullets() {
+        return bullets;
     }
 }
