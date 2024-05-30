@@ -53,7 +53,6 @@ public class Bullet extends Thread {
         if(y >= 0) {
             y -= 4;
             if(checkCollision() || y < 0) {
-                System.out.println("bullet removed");
                 running = false;
                 bullets.remove(this);
             }

@@ -2,6 +2,7 @@ package menu.gamepanels;
 
 import menu.ImageLoader;
 import menu.MainFrame;
+import menu.ScrollingImagesPanel;
 
 import javax.swing.*;
 
@@ -36,8 +37,12 @@ public class LosePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == retryButton) {
-                    MainFrame.layeredPane.remove(retryButton.getParent());
+                    ScrollingImagesPanel.timer.stop();
+                    ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
+                    MainFrame.layeredPane.removeAll();
+                    MainFrame.layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(1));
                     MainFrame.layeredPane.add(new PlayingPanel(), Integer.valueOf(2));
+                    MainFrame.layeredPane.revalidate();
                     MainFrame.layeredPane.repaint();
                 }
             }
@@ -52,8 +57,12 @@ public class LosePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == menuButton) {
-                    MainFrame.layeredPane.remove(menuButton.getParent());
+                    ScrollingImagesPanel.timer.stop();
+                    ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
+                    MainFrame.layeredPane.removeAll();
+                    MainFrame.layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(1));
                     MainFrame.layeredPane.add(new HomePanel(), Integer.valueOf(2));
+                    MainFrame.layeredPane.revalidate();
                     MainFrame.layeredPane.repaint();
                 }
             }

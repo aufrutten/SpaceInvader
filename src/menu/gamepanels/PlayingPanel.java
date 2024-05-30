@@ -15,8 +15,6 @@ import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class PlayingPanel extends JPanel implements ActionListener {
     public static Player player;
-    //private final Action rightAction;
-    //private final Action leftAction;
     private final Timer timer;
 
     public PlayingPanel() {
@@ -86,7 +84,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
             MainFrame.layeredPane.removeAll();
             MainFrame.layeredPane.revalidate();
             MainFrame.layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(1));
-            MainFrame.layeredPane.add(new HomePanel(), Integer.valueOf(2));
+            MainFrame.layeredPane.add(new LosePanel(), Integer.valueOf(2));
             MainFrame.layeredPane.repaint();
             return;
         }
