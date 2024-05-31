@@ -1,10 +1,12 @@
+package fileio;
+
 import java.io.*;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 // Author: Semykopenko Ihor
 // Date 20.05.2024
 
-public class MyIO {
+public class  MyIO {
 
     public static void readTXTRecord(String dataFilePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(dataFilePath))) {
@@ -28,11 +30,11 @@ public class MyIO {
         }
     }
 
-    public static <K, V> HashMap<K, V> readSerializerRecord(String dataFilePath) {
+    public static <T> ArrayList<T> readSerializerRecord(String dataFilePath) {
         try {
             FileInputStream is = new FileInputStream(dataFilePath);
             ObjectInputStream ois = new ObjectInputStream(is);
-            HashMap<K, V> obj = (HashMap<K, V>) ois.readObject();
+            ArrayList<T> obj = (ArrayList<T>) ois.readObject();
 
             ois.close();
             is.close();
@@ -40,12 +42,12 @@ public class MyIO {
             return obj;
 
         } catch (IOException | ClassNotFoundException e) {
-            writeSerializerRecord(dataFilePath, new HashMap<>());
-            return new HashMap<K, V>();
+            writeSerializerRecord(dataFilePath, new ArrayList<>());
+            return new ArrayList<>();
         }
     }
 
-    public static <K, V> void writeSerializerRecord(String dataFilePath, HashMap<K, V> obj) {
+    public static <T> void writeSerializerRecord(String dataFilePath, ArrayList<T> obj) {
         try {
             FileOutputStream fos = new FileOutputStream(dataFilePath);
             ObjectOutputStream oos = new ObjectOutputStream(fos);

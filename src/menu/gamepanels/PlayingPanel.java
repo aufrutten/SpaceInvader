@@ -1,5 +1,7 @@
 package menu.gamepanels;
 
+import fileio.MyIO;
+import fileio.Score;
 import menu.MainFrame;
 import menu.ScrollingImagesPanel;
 import units.Alien;
@@ -9,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Comparator;
 import java.util.Random;
 
 import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
@@ -73,6 +76,23 @@ public class PlayingPanel extends JPanel implements ActionListener {
         timer.start();
     }
 
+    public void savePlayerScore() {
+        MainFrame.scores = MyIO.readSerializerRecord("scores.bin");
+        if(MainFrame.scores.size() < 3)
+            MainFrame.scores.add(new Score(Player.score, "playername"));
+        else if (MainFrame.scores.getLast().getScore() < Player.score) {
+            MainFrame.scores.removeLast();
+            MainFrame.scores.add(new Score(Player.score, "playername"));
+            MainFrame.scores.sort(new Comparator<Score>() {
+                @Override
+                public int compare(Score o1, Score o2) {
+                    return Integer.compare(o2.getScore(), o1.getScore());
+                }
+            });
+        }
+        MyIO.writeSerializerRecord("scores.bin", MainFrame.scores);
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -85,6 +105,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         player.update();
         if(player.checkCollision() || Alien.borderCollision()) {
+            savePlayerScore();
             ScrollingImagesPanel.timer.stop();
             ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
             Alien.removeAliens();
