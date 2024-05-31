@@ -2,7 +2,6 @@ package units;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.io.InputStream;
 
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
@@ -18,7 +17,6 @@ public class Player {
     private boolean movingRight = false;
     private boolean movingLeft = false;
     private long lastFiretTime = 0;
-    Font joystix_monospace;
 
     public Player() {
         imageDefault = new ImageIcon("./Sprite/player-skins/playerScaled.png").getImage();
@@ -28,14 +26,6 @@ public class Player {
         x = (PANEL_WIDTH - image.getWidth(null)) / 2;
         score = 0;
         InputStream is = getClass().getResourceAsStream("/Sprite/font/Silevr.ttf");
-        try {
-            joystix_monospace = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(20f);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(joystix_monospace);
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-            joystix_monospace = new Font("Trebuchet MS", Font.BOLD, 20);
-        }
     }
 
     public int getX() {
@@ -56,7 +46,7 @@ public class Player {
 
     public void draw(Graphics g) {
         g.drawImage(image, x, y, null);
-        g.setFont(joystix_monospace);
+        g.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
         g.setColor(Color.WHITE);
         g.drawString("Score: " + score, 5, 25);
     }

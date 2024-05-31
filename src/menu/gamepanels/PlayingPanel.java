@@ -78,17 +78,15 @@ public class PlayingPanel extends JPanel implements ActionListener {
 
     public void savePlayerScore() {
         MainFrame.scores = MyIO.readSerializerRecord("scores.bin");
-        if(!MainFrame.scores.isEmpty()) {
+        if(MainFrame.scores.size() <= 2) {
+            MainFrame.scores.add(new Score(Player.score, MainFrame.playerName));
             MainFrame.scores.sort(new Comparator<Score>() {
                 @Override
                 public int compare(Score o1, Score o2) {
                     return Integer.compare(o2.getScore(), o1.getScore());
                 }
             });
-        }
-        if(MainFrame.scores.size() < 3)
-            MainFrame.scores.add(new Score(Player.score, MainFrame.playerName)); // plaername da sostituire con il nome del player
-        else if (MainFrame.scores.getLast().getScore() < Player.score) {
+        } else if (MainFrame.scores.getLast().getScore() < Player.score && MainFrame.scores.size() == 3) {
             MainFrame.scores.removeLast();
             MainFrame.scores.add(new Score(Player.score, MainFrame.playerName));
             MainFrame.scores.sort(new Comparator<Score>() {
@@ -97,9 +95,6 @@ public class PlayingPanel extends JPanel implements ActionListener {
                     return Integer.compare(o2.getScore(), o1.getScore());
                 }
             });
-        }
-        for(Score score : MainFrame.scores) {
-            System.out.println(score.getPlayerName() + " " + score.getScore());
         }
         MyIO.writeSerializerRecord("scores.bin", MainFrame.scores);
     }
