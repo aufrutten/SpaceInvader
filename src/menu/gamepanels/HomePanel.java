@@ -48,9 +48,11 @@ public class HomePanel extends JPanel {
         bestScoreLabel.setBounds((PANEL_WIDTH - bestScoreImage.getWidth()) / 2, 375, bestScoreImage.getWidth(), bestScoreImage.getHeight());
         add(bestScoreLabel);
 
-        JLabel bestScoreValueLabel = new JLabel(String.valueOf(MainFrame.scores.getFirst().getScore()));
+        JLabel bestScoreValueLabel = new JLabel();
         bestScoreValueLabel.setForeground(new Color(229, 184,11));
         bestScoreValueLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
+        if(!MainFrame.scores.isEmpty())
+            bestScoreValueLabel.setText(String.valueOf(MainFrame.scores.getFirst().getScore()));
         bestScoreValueLabel.setBounds((PANEL_WIDTH - 200) / 2, 420, 200, 30);
         bestScoreValueLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(bestScoreValueLabel);

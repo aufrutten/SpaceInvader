@@ -26,4 +26,9 @@ public class Score implements Serializable {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
+
+    @Override
+    public String toString() {
+        return playerName + ": " + score + "<br>";
+    }
 }

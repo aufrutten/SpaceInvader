@@ -4,6 +4,8 @@ package menu;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+
 import fileio.MyIO;
 import fileio.Score;
 import menu.gamepanels.HomePanel;
@@ -36,6 +38,12 @@ public class MainFrame {
         layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(1));
         // Crea il pannello di overlay
         scores = MyIO.readSerializerRecord("scores.bin");
+        scores.sort(new Comparator<Score>() {
+            @Override
+            public int compare(Score o1, Score o2) {
+                return Integer.compare(o2.getScore(), o1.getScore());
+            }
+        });
         layeredPane.add(new HomePanel(), Integer.valueOf(2));
 
         frame.add(layeredPane);
