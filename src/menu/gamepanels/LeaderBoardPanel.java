@@ -1,16 +1,23 @@
 package menu.gamepanels;
 
 import fileio.Score;
+import menu.ImageLoader;
 import menu.MainFrame;
+import menu.ScrollingImagesPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class LeaderBoardPanel extends JPanel {
     public LeaderBoardPanel() {
+        BufferedImage menuImage = ImageLoader.loadImage("./Sprite/menu_button.png");
+
         setLayout(null);
         setOpaque(false);
         setBounds(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
@@ -41,5 +48,25 @@ public class LeaderBoardPanel extends JPanel {
             messageLabel.setText(standings);
         }
         add(messageLabel);
+        JButton menuButton = new JButton(new ImageIcon(menuImage));
+        menuButton.setBounds(30, 30, menuImage.getWidth(), menuImage.getHeight());
+        menuButton.setBorderPainted(false);
+        menuButton.setContentAreaFilled(false);
+        menuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == menuButton) {
+                    ScrollingImagesPanel.timer.stop();
+                    ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
+                    MainFrame.layeredPane.removeAll();
+                    MainFrame.layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(1));
+                    MainFrame.layeredPane.add(new HomePanel(), Integer.valueOf(2));
+                    MainFrame.layeredPane.revalidate();
+                    MainFrame.layeredPane.repaint();
+                }
+            }
+        });
+        add(menuButton);
     }
+
 }
