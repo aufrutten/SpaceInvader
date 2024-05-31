@@ -4,7 +4,7 @@ package menu;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
+import fileio.MyIO;
 import fileio.Score;
 import menu.gamepanels.HomePanel;
 
@@ -12,6 +12,7 @@ import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class MainFrame {
+    public static String playerName;
     public static ArrayList<Score> scores = new ArrayList<>();
     public static JLayeredPane layeredPane;
     public static JFrame frame;
@@ -34,6 +35,7 @@ public class MainFrame {
         // Crea il pannello di scrolling
         layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(1));
         // Crea il pannello di overlay
+        scores = MyIO.readSerializerRecord("scores.bin");
         layeredPane.add(new HomePanel(), Integer.valueOf(2));
 
         frame.add(layeredPane);
