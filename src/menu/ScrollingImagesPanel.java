@@ -26,20 +26,17 @@ public class ScrollingImagesPanel extends JPanel implements ActionListener {
         BufferedImage image3 = ImageLoader.loadImage("./Sprite/backgroud/backgroundFrame3.png");
 
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-        // Ridimensiona le immagini mantenendo le proporzioni
+
         scaledImage1 = getScaledImage(image1, PANEL_WIDTH);
         scaledImage2 = getScaledImage(image2, PANEL_WIDTH);
         scaledImage3 = getScaledImage(image3, PANEL_WIDTH);
 
-        // Calcola l'altezza delle immagini ridimensionate
         imageHeight = scaledImage1.getHeight(this);
 
-        // Imposta le posizioni iniziali delle immagini in modo che siano visibili a schermo intero
         yPosition1 = 0;
         yPosition2 = yPosition1 + imageHeight;
         yPosition3 = yPosition2 + imageHeight;
 
-        // Imposta il timer per l'animazione
         timer = new Timer(TIMER_DELAY, this);
         timer.start();
         setBounds(0, 0, PANEL_WIDTH, PANEL_HEIGHT);

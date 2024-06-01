@@ -21,8 +21,8 @@ public class Alien extends Thread {
             image = new ImageIcon("./Sprite/enemy-skins/enemy.png").getImage();
         else
             image = new ImageIcon("./Sprite/enemy-skins/enemy2.png").getImage();
-        x = rand.nextInt(PANEL_WIDTH - image.getWidth(null));
-        y = rand.nextInt(100);
+        x = rand.nextInt(PANEL_WIDTH - (image.getWidth(null) + 20));
+        y = rand.nextInt(50);
         Thread thread = new Thread(this);
         thread.start();
     }
@@ -36,11 +36,6 @@ public class Alien extends Thread {
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-        try {
-            join();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

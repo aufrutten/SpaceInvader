@@ -63,7 +63,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
             }
         });
 
-        aliensTimer = new Timer(2500, new ActionListener() {
+        aliensTimer = new Timer(2000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Random random = new Random();
                 int number = random.nextInt(4) + 1;

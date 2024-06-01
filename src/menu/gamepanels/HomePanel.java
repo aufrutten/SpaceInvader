@@ -21,7 +21,7 @@ public class HomePanel extends JPanel {
         BufferedImage leaderboardButtonImage = ImageLoader.loadImage("./Sprite/leaderboard_button.png");
 
         setLayout(null);
-        setOpaque(false); // Rendi il pannello trasparente
+        setOpaque(false);
         setBounds(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
         setFocusable(true);
 

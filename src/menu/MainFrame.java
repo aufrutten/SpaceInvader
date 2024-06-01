@@ -34,9 +34,9 @@ public class MainFrame {
         layeredPane.setBounds(new Rectangle(PANEL_WIDTH, PANEL_HEIGHT));
         layeredPane.setFocusable(true);
 
-        // Crea il pannello di scrolling
+
         layeredPane.add(new ScrollingImagesPanel(), Integer.valueOf(1));
-        // Crea il pannello di overlay
+
         scores = MyIO.readSerializerRecord("scores.bin");
         scores.sort(new Comparator<Score>() {
             @Override
