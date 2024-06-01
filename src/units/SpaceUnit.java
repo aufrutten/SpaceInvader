@@ -3,14 +3,15 @@ package units;
 import board.Board;
 import board.PositionException;
 
+import java.util.Arrays;
+
 
 public abstract class SpaceUnit {
 
     private int x;
     private int y;
     protected final int size;
-    protected final int rangeSize;
-    protected final int[][] areaObject;
+    protected final int[][] area;
     protected final Board board;
 
     protected SpaceUnit(int x, int y, int size, Board board) throws PositionException {
@@ -19,11 +20,9 @@ public abstract class SpaceUnit {
         this.y = y;
         this.size = size;
         this.board = board;
-        this.rangeSize = this.size - 1;
-        this.areaObject = new int[(int) Math.pow(rangeSize * 2 + 1, 2)][2];
+        this.area = new int[(int) Math.pow(this.size * 2, 2)][2];
 
-        generateAreaOfObject();
-        setupObjectOnBoard();
+        setObjectOnBoard(genNewArea(x, y, size, board,this));
     }
 
     protected SpaceUnit(int x, int y, Board board) throws PositionException {
@@ -31,11 +30,22 @@ public abstract class SpaceUnit {
     }
 
     public void kill() {
-
+        // Must be abstract and rewrite
     }
 
-    public int[][] getAreaObject() {
-        return areaObject;
+    public int[][] getArea() {
+        return this.area;
+    }
+
+    private void setArea(int[][] generatedArea) {
+        System.arraycopy(generatedArea, 0, this.area, 0, generatedArea.length);
+    }
+
+    protected void removeArea() throws PositionException {
+        for (int[] oldCoordinates : this.area) {
+            this.board.clearPosition(oldCoordinates[0], oldCoordinates[1]);
+        }
+        this.setArea(new int[][]{{}});
     }
 
     protected int[] getPosition() {
@@ -44,46 +54,39 @@ public abstract class SpaceUnit {
 
     protected void setPosition(int x, int y) throws PositionException {
         // In case of fall. Save previous coordinates and points
-        int tempX = this.x;
-        int tempY = this.y;
-
+        int[][] newArea = genNewArea(x, y, this.size, this.board, this);
+        removeArea();
+        setObjectOnBoard(newArea);
         this.x = x;
         this.y = y;
-
-        try {
-            generateAreaOfObject();
-            setObjectOnBoard();
-        } catch (PositionException e) {
-//            setPosition(tempX, tempY); // Backup
-            throw new PositionException(e.toString());
-        }
     }
 
-    private void generateAreaOfObject() {
+    private int[][] genNewArea(int x, int y, int size, Board board, SpaceUnit unit) throws PositionException {
         // Generate a points of an object. bases of size
         int counter = 0;
-        for (int innerX = -rangeSize; innerX <= rangeSize; innerX++) {
-            for (int innerY = -rangeSize; innerY <= rangeSize; innerY++) {
-                this.areaObject[counter] = new int[]{innerX + x, innerY + y};
+        int range = size - 1;
+        int[][] result = new int[(int) Math.pow(size * 2, 2)][2];
+
+        for (int X = -range; X <= range; X++) {
+            for (int Y = -range; Y <= range; Y++) {
+                if (X + x == 0 && Y + y == 0) {
+                    System.out.printf("unit %s %n", unit);
+                }
+                if (board.isVoidPosition(X + x, Y + y)) {
+                    result[counter] = new int[]{X + x, Y + y};
+                };
                 counter++;
             }
         }
+        System.out.print(Arrays.deepToString(result));
+        return result;
     }
 
-    private void setupObjectOnBoard() throws PositionException {
-        // Setup points of an object on the board
-        for (int i = 0; i < Math.pow(rangeSize * 2 + 1, 2); i++) {
-            int[] coordinates = areaObject[i];
+    private void setObjectOnBoard(int[][] newArea) throws PositionException {
+        for (int[] coordinates : newArea) {
             this.board.setPosition(coordinates[0], coordinates[1], this);
         }
-    }
-
-    private void setObjectOnBoard() throws PositionException {
-        for (int i = 0; i < Math.pow(rangeSize * 2 + 1, 2); i++) {
-            int[] coordinates = areaObject[i];
-//            this.board.m(coordinates[0], coordinates[1], this);
-        }
-
+        setArea(newArea);
     }
 
     protected void moveLeft(int speed) throws PositionException {

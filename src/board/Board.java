@@ -3,11 +3,14 @@ package board;
 import units.SpaceUnit;
 import units.Void;
 
+import java.util.Arrays;
+import java.util.Iterator;
 
-public class Board {
+
+public class Board implements Iterable<SpaceUnit[]> {
     // Author Semykopenko Ihor
-    protected final int length;
-    protected final int height;
+    private final int length;
+    private final int height;
 
     protected final SpaceUnit[][] matrix;
 
@@ -25,6 +28,11 @@ public class Board {
     }
 
     @Override
+    public Iterator<SpaceUnit[]> iterator() {
+        return Arrays.stream(matrix).iterator();
+    }
+
+    @Override
     public String toString() {
         StringBuilder result = new StringBuilder("\n");
 
@@ -38,12 +46,8 @@ public class Board {
         return result.toString();
     }
 
-    public boolean isValidatePosition(int x, int y) {
-        return (x >= 0 && x < length) && (y >= 0 && y < height);
-    }
-
-    protected void validateCoordinates(int x, int y) throws PositionException {
-        if (!isValidatePosition(x, y)) {
+    public void validateCoordinates(int x, int y) throws PositionException {
+        if (!(x >= 0 && x < length) && (y >= 0 && y < height)) {
             String message = "Invalid coordinates 0<=( %s )<%s 0<=( %s )<%s".formatted(x, length, y, height);
             throw new PositionException(message);
         }
@@ -54,15 +58,6 @@ public class Board {
         return matrix[x][y] instanceof Void || matrix[x][y] == null;
     }
 
-    public boolean isVoidPosition(int x, int y, SpaceUnit unit) throws PositionException {
-        for (int[] coordinates : unit.getAreaObject()) {
-            if (x == coordinates[0] && y == coordinates[1]) {
-                return true;
-            }
-        }
-        return isVoidPosition(x, y);
-    }
-
     public SpaceUnit getPosition(int x, int y) throws PositionException {
         validateCoordinates(x, y);
         return matrix[x][y];
@@ -70,29 +65,12 @@ public class Board {
 
     public void setPosition(int x, int y, SpaceUnit unit) throws PositionException {
         validateCoordinates(x, y);
-
-        if (isVoidPosition(x, y, unit)) {
-            matrix[x][y] = unit;
-            return;
-        }
-
-        String message = "Position (%d, %d) is already occupied.".formatted(x, y);
-        throw new PositionException(message);
-
+        matrix[x][y] = unit;
     }
 
     public void clearPosition(int x, int y) throws PositionException {
         validateCoordinates(x, y);
         matrix[x][y] = new Void(x, y, this);
-    }
-
-    public void moveUnit(int oldX, int oldY, int newX, int newY) throws PositionException {
-        validateCoordinates(oldX, oldY);
-
-        if (!isVoidPosition(oldX, oldY) && isVoidPosition(newX, newY)) {
-            setPosition(newX, newY, getPosition(oldX, oldY));
-            clearPosition(oldX, oldY);
-        }
     }
 
     public int getLength() {

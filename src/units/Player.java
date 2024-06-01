@@ -80,7 +80,7 @@ public class Player {
 
     public void fire() {
         long actualFireTime = System.currentTimeMillis();
-        if (actualFireTime - lastFiretTime > 700) {
+        if (actualFireTime - lastFiretTime > 300) {
             lastFiretTime = actualFireTime;
             Bullet.bullets.add(new Bullet());
         }
