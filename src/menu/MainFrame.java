@@ -1,8 +1,12 @@
 package menu;
 
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -19,7 +23,7 @@ public class MainFrame {
     public static JLayeredPane layeredPane;
     public static JFrame frame;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame = new JFrame("Space Invader");
         frame.setLayout(null);

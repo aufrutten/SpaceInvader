@@ -7,10 +7,15 @@ import menu.ScrollingImagesPanel;
 import units.Alien;
 import units.Bullet;
 import units.Player;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Comparator;
 import java.util.Random;
 
@@ -21,8 +26,20 @@ public class PlayingPanel extends JPanel implements ActionListener {
     public static Player player;
     private final Timer timer;
     private final Timer aliensTimer;
+    private Clip clip;
 
     public PlayingPanel() {
+        try {
+            File file = new File("./Sprite/music/background-music.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         setFocusable(true);
         setLayout(null);
         setBounds(new Rectangle(PANEL_WIDTH, PANEL_HEIGHT));
@@ -111,6 +128,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         player.update();
         if(player.checkCollision() || Alien.borderCollision()) {
+            clip.stop();
             savePlayerScore();
             ScrollingImagesPanel.timer.stop();
             ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
