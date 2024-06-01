@@ -29,6 +29,7 @@ public class PlayingPanel extends JPanel implements ActionListener {
     private Clip clip;
 
     public PlayingPanel() {
+        HomePanel.clip.stop();
         try {
             File file = new File("./Sprite/music/background-music.wav");
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);

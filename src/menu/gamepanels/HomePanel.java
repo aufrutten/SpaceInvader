@@ -4,17 +4,37 @@ import menu.ImageLoader;
 import menu.MainFrame;
 import menu.ScrollingImagesPanel;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import static menu.ScrollingImagesPanel.PANEL_HEIGHT;
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
 
 public class HomePanel extends JPanel {
+    public static Clip clip;
+
     public HomePanel() {
+        if (clip != null) {
+            clip.stop();
+        }
+        try {
+            File file = new File("./Sprite/music/loop-menu-preview.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+            HomePanel.clip = AudioSystem.getClip();
+            HomePanel.clip.open(audioInputStream);
+            HomePanel.clip.start();
+            HomePanel.clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         BufferedImage titleImage = ImageLoader.loadImage("./Sprite/title.png");
         BufferedImage bestScoreImage = ImageLoader.loadImage("./Sprite/best_score.png");
         BufferedImage startButtonImage = ImageLoader.loadImage("./Sprite/start_button.png");

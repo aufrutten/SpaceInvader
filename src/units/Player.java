@@ -1,7 +1,10 @@
 package units;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.InputStream;
 
 import static menu.ScrollingImagesPanel.PANEL_WIDTH;
@@ -85,6 +88,14 @@ public class Player {
         if (actualFireTime - lastFiretTime >  400) {
             lastFiretTime = actualFireTime;
             Bullet.bullets.add(new Bullet());
+
+            try {
+                Clip finishSound = AudioSystem.getClip();
+                finishSound.open(AudioSystem.getAudioInputStream(new File("./Sprite/music/laser.wav")));
+                finishSound.start();
+            } catch (Exception exceptionOfFinishSound) {
+                exceptionOfFinishSound.printStackTrace();
+            }
         }
     }
 
