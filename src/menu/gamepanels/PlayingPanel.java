@@ -129,6 +129,13 @@ public class PlayingPanel extends JPanel implements ActionListener {
         player.update();
         if(player.checkCollision() || Alien.borderCollision()) {
             clip.stop();
+            try {
+                Clip finishSound = AudioSystem.getClip();
+                finishSound.open(AudioSystem.getAudioInputStream(new File("./Sprite/music/finish-sound.wav")));
+                finishSound.start();
+            } catch (Exception exceptionOfFinishSound) {
+                exceptionOfFinishSound.printStackTrace();
+            }
             savePlayerScore();
             ScrollingImagesPanel.timer.stop();
             ScrollingImagesPanel.timer.removeActionListener(ScrollingImagesPanel.timer.getActionListeners()[0]);
