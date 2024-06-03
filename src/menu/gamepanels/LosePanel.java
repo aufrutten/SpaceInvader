@@ -68,5 +68,12 @@ public class LosePanel extends JPanel {
             }
         });
         add(menuButton);
+
+        JLabel creditsLabel = new JLabel("<html>Credits: Atti Akram, Dragoni Luca, Semykopenkho Ihor,<br>Vergara Diego - 4X a.s. 2023-2024</html>");
+        creditsLabel.setFont(new Font("Trebuchet MS", Font.ITALIC, 16));
+        creditsLabel.setForeground(Color.WHITE);
+        creditsLabel.setBounds(0,PANEL_HEIGHT - 100, PANEL_WIDTH,  40);
+        creditsLabel.setHorizontalAlignment(JLabel.CENTER);
+        add(creditsLabel);
     }
 }

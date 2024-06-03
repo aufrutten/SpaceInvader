@@ -21,7 +21,7 @@ public class Alien extends Thread {
             image = new ImageIcon("./Sprite/enemy-skins/enemy.png").getImage();
         else
             image = new ImageIcon("./Sprite/enemy-skins/enemy2.png").getImage();
-        x = rand.nextInt(PANEL_WIDTH - (image.getWidth(null) + 20));
+        x = rand.nextInt(PANEL_WIDTH - (image.getWidth(null) + 35));
         y = rand.nextInt(50);
         Thread thread = new Thread(this);
         thread.start();
@@ -59,7 +59,7 @@ public class Alien extends Thread {
             x += random.nextInt(20) + 5;
     }
 
-    public static boolean borderCollision() {
+    public static synchronized boolean borderCollision() {
         if(aliens != null) {
             for(Alien alien : Alien.getAliens()) {
                 if(alien.y >= PANEL_HEIGHT - alien.image.getHeight(null))
@@ -70,22 +70,22 @@ public class Alien extends Thread {
     }
 
     //Static method for Enemy management
-    public static ArrayList<Alien> getAliens() {
+    public static synchronized ArrayList<Alien> getAliens() {
         return aliens;
     }
 
-    public static void spawnAliens(int number) {
+    public static synchronized void spawnAliens(int number) {
         for (int i = 0; i < number; i++) {
             aliens.add(new Alien());
         }
     }
 
-    public static void removeAlien(Alien alien) {
+    public static synchronized void removeAlien(Alien alien) {
         alien.running = false;
         aliens.remove(alien);
     }
 
-    public static void removeAliens() {
+    public static synchronized void removeAliens() {
         for(Alien alien : aliens) {
             if(alien != null)
                 alien.running = false;
@@ -93,7 +93,7 @@ public class Alien extends Thread {
         aliens.clear();
     }
 
-    public static void drawAliens(Graphics g) {
+    public static synchronized void drawAliens(Graphics g) {
         for (Alien alien : aliens) {
             if(alien != null)
                 alien.draw(g);

@@ -21,20 +21,6 @@ public class HomePanel extends JPanel {
     public static Clip clip;
 
     public HomePanel() {
-        if (clip != null) {
-            clip.stop();
-        }
-        try {
-            File file = new File("./Sprite/music/loop-menu-preview.wav");
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
-            HomePanel.clip = AudioSystem.getClip();
-            HomePanel.clip.open(audioInputStream);
-            HomePanel.clip.start();
-            HomePanel.clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         BufferedImage titleImage = ImageLoader.loadImage("./Sprite/title.png");
         BufferedImage bestScoreImage = ImageLoader.loadImage("./Sprite/best_score.png");
         BufferedImage startButtonImage = ImageLoader.loadImage("./Sprite/start_button.png");
@@ -46,17 +32,17 @@ public class HomePanel extends JPanel {
         setFocusable(true);
 
         JLabel titleLabel = new JLabel(new ImageIcon(titleImage));
-        titleLabel.setBounds((PANEL_WIDTH - titleImage.getWidth()) / 2, 100, titleImage.getWidth(), titleImage.getHeight());
+        titleLabel.setBounds((PANEL_WIDTH - titleImage.getWidth()) / 2, 50, titleImage.getWidth(), titleImage.getHeight());
         add(titleLabel);
 
-        JLabel nameLabel = new JLabel("Inserisci il tuo nome:");
+        JLabel nameLabel = new JLabel("Insert your name:");
         nameLabel.setForeground(Color.ORANGE);
         nameLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
-        nameLabel.setBounds((PANEL_WIDTH - 200) / 2, 250, 200, 30);
+        nameLabel.setBounds((PANEL_WIDTH - 200) / 2, 200, 200, 30);
         add(nameLabel);
 
         JTextField nameTextField = new JTextField("Name");
-        nameTextField.setBounds((PANEL_WIDTH - 200) / 2, 290, 200, 40);
+        nameTextField.setBounds((PANEL_WIDTH - 200) / 2, 240, 200, 40);
         nameTextField.setBackground(new Color(31, 40, 45));
         nameTextField.setForeground(new Color(229, 184, 11));
         nameTextField.setBorder(BorderFactory.createLineBorder(new Color(229, 184, 11), 3));
@@ -65,7 +51,7 @@ public class HomePanel extends JPanel {
         add(nameTextField);
 
         JLabel bestScoreLabel = new JLabel(new ImageIcon(bestScoreImage));
-        bestScoreLabel.setBounds((PANEL_WIDTH - bestScoreImage.getWidth()) / 2, 375, bestScoreImage.getWidth(), bestScoreImage.getHeight());
+        bestScoreLabel.setBounds((PANEL_WIDTH - bestScoreImage.getWidth()) / 2, 325, bestScoreImage.getWidth(), bestScoreImage.getHeight());
         add(bestScoreLabel);
 
         JLabel bestScoreValueLabel = new JLabel();
@@ -73,12 +59,12 @@ public class HomePanel extends JPanel {
         bestScoreValueLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 22));
         if(!MainFrame.scores.isEmpty())
             bestScoreValueLabel.setText(String.valueOf(MainFrame.scores.getFirst().getScore()));
-        bestScoreValueLabel.setBounds((PANEL_WIDTH - 200) / 2, 420, 200, 30);
+        bestScoreValueLabel.setBounds((PANEL_WIDTH - 200) / 2, 370, 200, 30);
         bestScoreValueLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(bestScoreValueLabel);
 
         JButton startButton = new JButton(new ImageIcon(startButtonImage));
-        startButton.setBounds((PANEL_WIDTH - startButtonImage.getWidth()) / 2, 550, startButtonImage.getWidth(), startButtonImage.getHeight());
+        startButton.setBounds((PANEL_WIDTH - startButtonImage.getWidth()) / 2, 475, startButtonImage.getWidth(), startButtonImage.getHeight());
         startButton.setBorderPainted(false);
         startButton.setContentAreaFilled(false);
         startButton.addActionListener(new ActionListener() {
@@ -99,7 +85,7 @@ public class HomePanel extends JPanel {
         add(startButton);
 
         JButton leaderboardButton = new JButton(new ImageIcon(leaderboardButtonImage));
-        leaderboardButton.setBounds((PANEL_WIDTH - leaderboardButtonImage.getWidth()) / 2, 650, leaderboardButtonImage.getWidth(), leaderboardButtonImage.getHeight());
+        leaderboardButton.setBounds((PANEL_WIDTH - leaderboardButtonImage.getWidth()) / 2, 575, leaderboardButtonImage.getWidth(), leaderboardButtonImage.getHeight());
         leaderboardButton.setBorderPainted(false);
         leaderboardButton.setContentAreaFilled(false);
         leaderboardButton.addActionListener(new ActionListener() {
@@ -117,5 +103,26 @@ public class HomePanel extends JPanel {
             }
         });
         add(leaderboardButton);
+
+        JLabel creditsLabel = new JLabel("<html>Credits: Atti Akram, Dragoni Luca, Semykopenkho Ihor,<br>Vergara Diego - 4X a.s. 2023-2024</html>");
+        creditsLabel.setFont(new Font("Trebuchet MS", Font.ITALIC, 16));
+        creditsLabel.setForeground(Color.WHITE);
+        creditsLabel.setBounds(0,PANEL_HEIGHT - 100, PANEL_WIDTH,  40);
+        creditsLabel.setHorizontalAlignment(JLabel.CENTER);
+        add(creditsLabel);
+
+        if (clip != null) {
+            clip.stop();
+        }
+        try {
+            File file = new File("./Sprite/music/loop-menu-preview.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+            HomePanel.clip = AudioSystem.getClip();
+            HomePanel.clip.open(audioInputStream);
+            HomePanel.clip.start();
+            HomePanel.clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
