@@ -21,7 +21,7 @@ public class Alien extends Thread {
             image = new ImageIcon("./Sprite/enemy-skins/enemy.png").getImage();
         else
             image = new ImageIcon("./Sprite/enemy-skins/enemy2.png").getImage();
-        x = rand.nextInt(PANEL_WIDTH - (image.getWidth(null) + 35));
+        x = rand.nextInt(PANEL_WIDTH - (image.getWidth(null) + 50));
         y = rand.nextInt(50);
         Thread thread = new Thread(this);
         thread.start();
@@ -53,7 +53,7 @@ public class Alien extends Thread {
         else
             running = false;
         Random random = new Random();
-        if(random.nextInt(101) == 0 && x >= 0 ) {
+        if(random.nextInt(101) == 0 && x >= image.getWidth(null) ) {
             x -= random.nextInt(20) + 5;
         } else if(random.nextInt(101) == 100 && x <= PANEL_WIDTH - image.getWidth(null))
             x += random.nextInt(20) + 5;
